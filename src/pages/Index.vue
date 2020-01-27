@@ -29,20 +29,6 @@
 
     <q-card style="width: 800px">
       <q-card-section class="fit row" v-if="listItems.length > 0">
-        <q-item class="fit row">
-          <q-item-section>
-            Nome
-          </q-item-section>
-          <q-item-section>
-            Idade
-          </q-item-section>
-          <q-item-section>
-            E-mail
-          </q-item-section>
-          <q-item-section>
-            CPF
-          </q-item-section>
-        </q-item>
         <q-list dense bordered class="rounded-borders fit">
           <q-item clickable v-ripple v-for="(item, i) in listItems" :key="i" @click="selectItem(item, i)">
             <q-item-section>

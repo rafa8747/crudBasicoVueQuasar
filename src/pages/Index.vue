@@ -6,16 +6,16 @@
     <q-card class="q-mb-lg" style="width: 800px">
       <q-card-section class="row">
         <div class="col-6 q-pr-md">
-          <q-input outlined dense v-model="nome" label="Nome"/>
+          <q-input outlined dense v-model="nome" label="Nome" @blur="$v.nome.$touch()" :error="$v.nome.$error"/>
         </div>
         <div class="col-6">
-          <q-input outlined dense v-model="idade" label="Idade"/>
+          <q-input outlined dense v-model="idade" label="Idade" @blur="$v.idade.$touch()" :error="$v.idade.$error"/>
         </div>
         <div class="col-6 q-pr-md q-pt-md">
-          <q-input outlined dense v-model="email" label="E-mail"/>
+          <q-input outlined dense v-model="email" label="E-mail" @blur="$v.email.$touch()" :error="$v.email.$error"/>
         </div>
         <div class="col-6 q-pt-md">
-          <q-input outlined dense v-model="cpf" label="CPF"/>
+          <q-input outlined dense v-model="cpf" label="CPF" @blur="$v.cpf.$touch()" :error="$v.cpf.$error"/>
         </div>
         <div class="fit row justify-end">
           <q-btn color="primary" label="Salvar" class="col-2 q-mt-md" @click="saveItem"/>
@@ -58,6 +58,8 @@
 
 <script>
 
+import { required } from 'vuelidate/lib/validators'
+
 export default {
   data () {
     return {
@@ -71,11 +73,27 @@ export default {
     }
   },
 
+  validations: {
+    nome: { required },
+    idade: { required },
+    email: { required },
+    cpf: { required }
+  },
+
   mounted () {
   },
 
   methods: {
     saveItem () {
+      this.$v.$touch()
+
+      if (this.$v.$invalid) {
+        alert('Preencha os campos obrigatórios!')
+        return false
+      }
+
+      this.$v.$reset()
+
       if (!this.editingMode) {
         let obj = {
           nome: this.nome,

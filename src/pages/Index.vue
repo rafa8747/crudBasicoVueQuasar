@@ -128,6 +128,9 @@ export default {
 
     deleteItem (index) {
       this.listItems.splice(index, 1)
+
+      this.clearFields()
+      this.editingMode = false
     },
 
     clearFields () {
